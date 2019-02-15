@@ -8,7 +8,7 @@
    if (NODE_ENV === 'production') {
      JOBFREQUENCY = '0 */15 * * * *'; // every 15 mins
    }
-   if (NODE_ENV === 'test') {
+   if (NODE_ENV === 'test' || NODE_ENV === 'qa') {
      JOBFREQUENCY = '0 0,30 * * * *'; // At minute 0 and 30 min.
    }
    if (NODE_ENV === 'development') {

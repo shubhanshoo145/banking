@@ -1,18 +1,6 @@
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  get TRULIOO_URL() {
-    if (NODE_ENV === 'production') {
-      return 'http://distributed-api.instarem.com/trulioo_service/validate';
-    }
-    return 'http://distributed-api.instarem.com/trulioo_service/staging/validate';
-  },
-  get WORLDCHECK_URL() {
-    if (NODE_ENV === 'production') {
-      return 'http://distributed-api.instarem.com/world_check/validate/';
-    }
-    return 'http://distributed-api.instarem.com/trulioo_service/staging/validate/';
-  },
   get REUTERS_TOKEN_URL() {
     if (NODE_ENV === 'production') {
       return 'https://api.rkd.reuters.com/api/TokenManagement/TokenManagement.svc/REST/Anonymous/TokenManagement_1/CreateServiceToken_1';
@@ -36,6 +24,8 @@ module.exports = {
       return 'http://localhost:4701';
     } else if (NODE_ENV === 'test') {
       return 'http://161.202.19.190:4701';
+    } else if (NODE_ENV === 'qa') {
+      return 'http://192.168.2.220:4701';
     } else if (NODE_ENV === 'production') {
       return 'http://161.202.19.184:4701';
     }

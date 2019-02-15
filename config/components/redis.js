@@ -13,6 +13,14 @@ function config() {
       password: '#insta@mer',
     };
   }
+  if (process.env.NODE_ENV === 'qa') {
+    return {
+      dbURI: '192.168.2.222',
+      port: '6379',
+      password: '',
+    };
+  }
+
   return {
     dbURI: '127.0.0.1',
     port: '6379',

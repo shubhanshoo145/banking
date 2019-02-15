@@ -22,6 +22,11 @@ if (process.env.NODE_ENV === 'development') {
   process.env.LOGGER_LEVEL = 'debug';
   process.env.DB = 'masspay-v2-test';
   process.env.DB_URI = 'adminMasspay:Instarem1!@161.202.19.190:27017';
+} else if (process.env.NODE_ENV === 'qa') {
+  process.env.PORT = 4703;
+  process.env.LOGGER_LEVEL = 'debug';
+  process.env.DB = 'masspay-v2-test';
+  process.env.DB_URI = 'qa-masspay-v2-test:CGCCH7dqSg8XNUkXcG@192.168.2.223:27017';
 } else if (process.env.NODE_ENV === 'production') {
   process.env.PORT = 4703;
   process.env.LOGGER_LEVEL = 'debug';
