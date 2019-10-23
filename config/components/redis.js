@@ -22,7 +22,7 @@ function config() {
   }
   if (process.env.NODE_ENV === 'preprod') {
     return {
-      dbURI: 'instauatrediscluster.jeclmu.0001.euw1.cache.amazonaws.com',
+      dbURI: 'preprodrediscluster.lydffc.0001.euw1.cache.amazonaws.com',
       port: '6379',
       password: '',
     }

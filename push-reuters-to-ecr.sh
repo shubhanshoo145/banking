@@ -31,9 +31,9 @@ printf "module.exports = {
   NODE_ENV: '$nodeEnv',
 };" > env/index.js
 
-docker build . -f ./dockerfile-deploy -t 439962001458.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-latest
-docker tag 439962001458.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-latest 439962001458.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-$tag
-docker push 439962001458.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-$tag
+docker build . -f ./dockerfile-deploy -t 330741986720.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-latest
+docker tag 330741986720.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-latest 330741986720.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-$tag
+docker push 330741986720.dkr.ecr.eu-west-1.amazonaws.com/masspay-reuters:$nodeEnv-$tag
 
 #retrieve old env file
 printf "$oldEnvFile" > env/index.js
