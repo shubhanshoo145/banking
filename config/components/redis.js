@@ -20,6 +20,13 @@ function config() {
       password: '',
     };
   }
+  if (process.env.NODE_ENV === 'preprod') {
+    return {
+      dbURI: 'preprodrediscluster.lydffc.0001.euw1.cache.amazonaws.com',
+      port: '6379',
+      password: '',
+    }
+  }
 
   return {
     dbURI: '127.0.0.1',

@@ -2,7 +2,7 @@ const joi = require('joi');
 
 const envVarsSchema = joi.object({
     NODE_ENV: joi.string()
-      .allow(['development', 'production', 'test', 'provision'])
+      .allow(['development', 'production', 'test', 'provision', 'preprod'])
       .required(),
     PORT: joi.number()
       .required(),
@@ -16,7 +16,7 @@ if (error) {
 
 const config = {
   env: envVars.NODE_ENV,
-  isTest: envVars.NODE_ENV === 'test' || envVars.NODE_ENV === 'qa',
+  isTest: envVars.NODE_ENV === 'test' || envVars.NODE_ENV === 'qa' || envVars.NODE_ENV === 'preprod',
   isDevelopment: envVars.NODE_ENV === 'development',
   port: envVars.PORT,
   jwtSecret: envVars.JWT_SECRET,
