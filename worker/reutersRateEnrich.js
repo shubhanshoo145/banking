@@ -6,11 +6,24 @@ const constants = require('../constants');
 const co = require('co');
 const _ = require('lodash');
 const redis = require('redis');
+const cron = require('cron');
 
 function* getCurrencies() {
   const _currencyDAO = currencyDAO();
   const baseQuery = {};
   return yield _currencyDAO.find({ baseQuery });
+}
+
+function getRateExpirationTimeISO() {
+  let expiresAt;
+
+  if (cron.timeout(constants.CRON_TIME) === undefined) {
+    expiresAt = '';
+  } else {
+    expiresAt = new Date(new Date().getTime() + cron.timeout(constants.CRON_TIME)).toISOString();
+  }
+
+  return expiresAt;
 }
 
 // function to filter reuters result array
@@ -20,12 +33,14 @@ function filterReutersResultArray(reutersResult, sourceCurrency) {
     const destinationCurrencyRate = val.Fields && val.Fields.Field[2] && val.Fields.Field[2].Double ? val.Fields.Field[2].Double : 0;
     const destinationCurrency = val.Fields && val.Fields.Field[3] && val.Fields.Field[3].Utf8String ? val.Fields.Field[3].Utf8String : sourceCurrency;
     const calculatedRate = parseFloat((destinationCurrencyRate / scalingFactor).toFixed(8));
+    const expiresAtISO = getRateExpirationTimeISO();
 
     rateObj[`${sourceCurrency}${destinationCurrency}`] = {
       destinationCurrency: destinationCurrency,
       fxRate: destinationCurrency === sourceCurrency ? 1 : calculatedRate,
       sourceCurrency: sourceCurrency,
       scalingFactor: scalingFactor,
+      expiresAt: expiresAtISO,
     };
     return rateObj;
   }, {});
