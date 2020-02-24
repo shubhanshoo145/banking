@@ -1,0 +1,40 @@
+{
+  "name": "reuters-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yogi",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "co": "4.6.0",
+    "cors": "^2.8.3",
+    "cron": "1.2.1",
+    "crypto-js": "^3.1.9-1",
+    "eslint": "3.17.0",
+    "express": "4.15.0",
+    "joi": "10.2.2",
+    "lodash": "^4.17.4",
+    "mongoose": "4.8.5",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "^1.8.2",
+    "redis": "^2.7.1",
+    "request": "^2.81.0",
+    "superagent": "3.5.0",
+    "winston": "2.3.1"
+  },
+  "devDependencies": {
+    "eslint": "3.17.0",
+    "eslint-config-airbnb-base": "11.1.1",
+    "eslint-plugin-import": "2.2.0",
+    "nodemon": "1.11.0"
+  },
+  "engines": {
+    "node": ">=6.4.0"
+  }
+}
