@@ -19,6 +19,21 @@ module.exports = {
   get MARGIN() {
     return 0.25;
   },
+  get CRON_TIME() {
+    if (NODE_ENV === 'development') {
+      return '*/15 * * * *'; // every 15 mins
+    } else if (NODE_ENV === 'test') {
+      return '0 0,30 * * * *'; // At minute 0 and 30 min.
+    } else if (NODE_ENV === 'production') {
+      return '0 0 1 1 * *'; // at 1 of month
+    } else if (NODE_ENV === 'qa') {
+      return '0 0 1 1 * *'; // at 1 of month
+    } else if (NODE_ENV === 'preprod') {
+      return '0 0 1 1 * *'; // at 1 of month
+    }
+
+    return '0 0 1 1 * *';
+  },
   get FRONT_END_HOST() {
     if (NODE_ENV === 'development') {
       return 'http://localhost:4701';
