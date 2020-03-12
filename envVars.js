@@ -30,8 +30,8 @@ if (process.env.NODE_ENV === 'development') {
 } else if (process.env.NODE_ENV === 'preprod') {
   process.env.PORT = 4703;
   process.env.LOGGER_LEVEL = 'debug';
-  process.env.DB = 'masspay-v2-test?replicaSet=instareplica';
-  process.env.DB_URI = 'preprodappuser:XGM6FzmpbuFWFc6e@mongo-uatcluster1.internal.instarem.com:27017,mongo-uatcluster2.internal.instarem.com:27017,mongo-uatcluster3.internal.instarem.com:27017';
+  process.env.DB = 'masspay-v2-production';
+  process.env.DB_URI = 'preprodappuser:XGM6FzmpbuFWFc6e@172.16.2.231:27017';
 } else if (process.env.NODE_ENV === 'production') {
   process.env.PORT = 4703;
   process.env.LOGGER_LEVEL = 'debug';
