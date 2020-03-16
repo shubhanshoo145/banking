@@ -25,7 +25,7 @@ module.exports = {
     } else if (NODE_ENV === 'test') {
       return '0 0,30 * * * *'; // At minute 0 and 30 min.
     } else if (NODE_ENV === 'production') {
-      return '0 0 1 1 * *'; // at 1 of month
+      return '*/15 * * * *';
     } else if (NODE_ENV === 'qa') {
       return '0 0 1 1 * *'; // at 1 of month
     } else if (NODE_ENV === 'preprod') {
