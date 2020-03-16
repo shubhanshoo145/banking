@@ -31,9 +31,11 @@ function filterReutersResultArray(reutersResult, sourceCurrency) {
   const filteredObject = reutersResult.reduce((rateObj, val) => {
     const scalingFactor = val.Fields && val.Fields.Field[0] && val.Fields.Field[0].Utf8String ? val.Fields.Field[0].Utf8String : 1;
     const destinationCurrencyRate = val.Fields && val.Fields.Field[2] && val.Fields.Field[2].Double ? val.Fields.Field[2].Double : 0;
-    const destinationCurrency = val.Fields && val.Fields.Field[3] && val.Fields.Field[3].Utf8String ? val.Fields.Field[3].Utf8String : sourceCurrency;
     const calculatedRate = parseFloat((destinationCurrencyRate / scalingFactor).toFixed(8));
     const expiresAtISO = getRateExpirationTimeISO();
+
+    const destinationCurrency = val.Fields && val.Fields.Field[3] && val.Fields.Field[3].Utf8String ?
+    val.Fields.Field[3].Utf8String : (val.RequestKey.Name.split('=')[0].substring(3) || sourceCurrency);
 
     rateObj[`${sourceCurrency}${destinationCurrency}`] = {
       destinationCurrency: destinationCurrency,

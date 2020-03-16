@@ -65,6 +65,7 @@ module.exports = {
       USDINR: 'INR=X',
       USDMYR: 'MYR=X',
       USDPHP: 'PHP=X',
+      USDPKR: 'PKR=X',
       USDLKR: 'LKR=X',
       USDUSD: 'USD=X',
       USDMOP: 'MOP=X',
@@ -376,6 +377,7 @@ module.exports = {
       MYRKRW: 'MYRKRW=R',
       THBKRW: 'THBKRW=R',
       NZDKRW: 'NZDKRW=R',
+      COPJPY: 'COPJPY=X',
     };
   },
 };
