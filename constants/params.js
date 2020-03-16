@@ -21,11 +21,11 @@ module.exports = {
   },
   get CRON_TIME() {
     if (NODE_ENV === 'development') {
-      return '*/15 * * * *'; // every 15 mins
+      return '0 */15 * * * *'; // every 15 mins
     } else if (NODE_ENV === 'test') {
       return '0 0,30 * * * *'; // At minute 0 and 30 min.
     } else if (NODE_ENV === 'production') {
-      return '*/15 * * * *';
+      return '0 */15 * * * *';
     } else if (NODE_ENV === 'qa') {
       return '0 0 1 1 * *'; // at 1 of month
     } else if (NODE_ENV === 'preprod') {
@@ -65,6 +65,7 @@ module.exports = {
       USDINR: 'INR=X',
       USDMYR: 'MYR=X',
       USDPHP: 'PHP=X',
+      USDPKR: 'PKR=X',
       USDLKR: 'LKR=X',
       USDUSD: 'USD=X',
       USDMOP: 'MOP=X',
@@ -376,6 +377,7 @@ module.exports = {
       MYRKRW: 'MYRKRW=R',
       THBKRW: 'THBKRW=R',
       NZDKRW: 'NZDKRW=R',
+      COPJPY: 'COPJPY=X',
     };
   },
 };
