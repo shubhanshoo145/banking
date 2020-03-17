@@ -20,5 +20,5 @@ require('./reuterRates')(router);
  * @param {object} app Express instance
  */
 module.exports = function (app) {
-  app.use('/reuters/api/v1', router);
+  app.use('/api/v1', router);
 };
