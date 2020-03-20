@@ -8,16 +8,16 @@ const AppError = require('../commons').ERROR;
 function reutersRate(currencyPairArray) { // [{ Name:'USDINR=X', NameType: 'RIC'}]
   return new Promise((resolve, reject) => {
     return request({
-      headers: {
-        'content-type': 'application/json',
-      },
       url: constants.REUTERS_TOKEN_URL,
-      qs: {
-        ApplicationID: 'PrajitInstaremCom',
-        Username: 'prajit@instarem.com',
-        Password: 'Instarem123',
+      body: {
+        CreateServiceToken_Request_1: {
+          ApplicationID: 'PrajitInstaremCom',
+          Username: 'prajit@instarem.com',
+          Password: 'Instarem123',
+        },
       },
-      method: 'GET',
+      json: true,
+      method: 'POST',
     }, (err, response, data) => {
       if (err) {
         logger.info(err, 'error in fetching reuters token');
@@ -25,7 +25,7 @@ function reutersRate(currencyPairArray) { // [{ Name:'USDINR=X', NameType: 'RIC'
       }
       let token;
       try {
-        const parsedData = data ? JSON.parse(data) : {};
+        const parsedData = data;
         token = parsedData && parsedData.CreateServiceToken_Response_1 && parsedData.CreateServiceToken_Response_1.Token ? parsedData.CreateServiceToken_Response_1.Token : '';
       } catch (e) {
         throw e;
