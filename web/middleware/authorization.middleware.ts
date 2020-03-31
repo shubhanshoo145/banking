@@ -3,11 +3,10 @@ import { injectable, inject } from 'inversify';
 import { IConfig } from 'config';
 import * as cryptoJs from 'crypto-js';
 
-import { IMiddlewareProvider } from '../../commons/interfaces/middleware/IMiddlewareProvider';
 import types from '../../constants/types';
+import { IMiddlewareProvider } from '../../commons/interfaces/middleware/IMiddlewareProvider';
 import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 import { IMiddlewareConfig } from '../../commons/interfaces/config/IMiddlewareConfig';
-
 
 @injectable()
 export class AuthorizationMiddleware implements IMiddlewareProvider {

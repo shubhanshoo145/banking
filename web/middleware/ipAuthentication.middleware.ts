@@ -8,7 +8,6 @@ import { IMiddlewareProvider } from '../../commons/interfaces/middleware/IMiddle
 import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 import { IMiddlewareConfig } from '../../commons/interfaces/config/IMiddlewareConfig';
 
-
 @injectable()
 export class IpAuthenticationMiddleware implements IMiddlewareProvider {
   @inject(types.LoggerService) private readonly loggerService: ILoggerService;

@@ -28,7 +28,7 @@ export class HttpRouter implements IHttpRouter {
     cronjobsController(this.router);
 
     this.ipAuthenticationMiddleware.register(this.router);
-    // this.authorizationMiddleware.register(this.router);
+    this.authorizationMiddleware.register(this.router);
 
     ratesController(this.router);
   }
