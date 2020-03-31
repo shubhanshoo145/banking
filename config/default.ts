@@ -10,6 +10,7 @@ const config: IServiceConfig = {
     DB_USERNAME: null,
     DB_PASSWORD_ENCRYPTED: null,
     DB_CONNECTION_STRING: deferConfig(() => `mongodb://${config.mongoose.DB_URI}/${config.mongoose.DB}`),
+    REPLICA_SET: null,
   },
   redis: {
     URI: 'host.docker.internal',
@@ -19,6 +20,15 @@ const config: IServiceConfig = {
   },
   httpServer: {
     PORT: 4703,
+    KEEPALIVE_TIMEOUT: 120000,
+    REQUEST_TIMEOUT: 120000,
+  },
+  notifications: {
+    NOTIFICATION_SERVICE_ENABLED: false,
+    NOTIFICATION_ENDPOINT: '',
+    NOTIFICATION_SECRET_KEY_ENCRYPTED: 'yourSecretKey',
+    NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(this.default.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
+    MAIL_ERRORS_TO: [],
   },
   reuters: {
     REUTERS_TOKEN_URL: 'https://api.rkd.reuters.com/api/TokenManagement/TokenManagement.svc/REST/Anonymous/TokenManagement_1/CreateServiceToken_1',

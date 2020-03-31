@@ -2,9 +2,9 @@ import { injectable } from 'inversify';
 import * as Transport from 'winston-transport';
 
 import types from '../../../constants/types';
+import container from '../../../container';
 import { IEmailTransport } from '../logging.interfaces';
 import { IErrorLoggedEvent } from "../../../commons/interfaces/events/IErrorLoggedEvent";
-import container from '../../../container';
 import { IEmailNotificationService } from '../../notifications/notification.interfaces';
 
 const message: any = Symbol.for('message');
@@ -30,7 +30,6 @@ export class EmailTransport extends Transport implements IEmailTransport {
       rawMessage: JSON.parse(info[message]),
       meta: info[splat],
     } as IErrorLoggedEvent);
-
 
     if (callback) callback();
   }

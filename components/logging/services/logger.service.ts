@@ -36,11 +36,9 @@ export class LoggerService implements ILoggerService {
           format.timestamp(),
           format.json(),
         ),
-        emailLimit: config.has('default.notifications.ERROR_MAILS_PER_HOUR') ? config.get('default.notifications.ERROR_MAILS_PER_HOUR') : 10,
         handleExceptions: false,
       }));
     }
-
   }
 
   public silly(message: string, metadata?: any): void {
@@ -72,12 +70,10 @@ export class LoggerService implements ILoggerService {
       return {};
     }
 
-    // Make a copy & process the whole object
     return this.transformProperty(target);
   }
 
   private transformProperty(node: any, depth = 0): any {
-    // Transform arrays
     if (node && Array.isArray(node)) {
       if (depth > this.MAX_TRANSFORMATION_DEPTH) {
         return 'Maximum depth reached, aborting further transformation';
@@ -88,7 +84,6 @@ export class LoggerService implements ILoggerService {
       });
     }
 
-    // Transform objects
     if (node && typeof (node) === 'object') {
       if (depth > this.MAX_TRANSFORMATION_DEPTH) {
         return 'Maximum depth reached, aborting further transformation';
@@ -123,7 +118,6 @@ export class LoggerService implements ILoggerService {
       return resultObject;
     }
 
-    // Don't transform anything else
     return node;
   }
 }

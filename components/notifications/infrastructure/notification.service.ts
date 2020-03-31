@@ -1,27 +1,27 @@
 import axios from 'axios';
-import * as config from 'config';
-import { injectable, inject } from 'inversify';
+import { injectable, inject, postConstruct } from 'inversify';
+import { IConfig } from 'config';
 import * as Joi from '@hapi/joi';
 
 import types from '../../../constants/types';
 import { INotificationService } from '../../../commons/interfaces/services/INotificationService';
 import { ILoggerService } from '../../../commons/interfaces/services/ILoggerService';
+import { INotificationConfig } from '../../../commons/interfaces/config/INotificationConfig';
 
 @injectable()
 export class NotificationService implements INotificationService {
   @inject(types.LoggerService) private readonly loggerService: ILoggerService;
 
-  private notificationEngineEndpoint: string;
-  private appKey: string;
+  private notificationConfig: INotificationConfig;
 
-  public constructor () {
-    this.initializeService();
+  public constructor (@inject(types.Config) config: IConfig) {
+    this.notificationConfig = config.get('default.notifications');
   }
 
   public async createNotification(options): Promise<void> {
     try {
       const response = await this.makeRequest(Object.assign(
-          { url: `${this.notificationEngineEndpoint}/notification`, method: 'post' },
+          { url: `${this.notificationConfig.NOTIFICATION_ENDPOINT}/notification`, method: 'post' },
           { data: options },
         ),
       );
@@ -34,69 +34,22 @@ export class NotificationService implements INotificationService {
     }
   }
 
-  public async markAsRead (options: any = {}) {
-    options.status = 'read';
-    return await this.updateStatus(options);
-  }
-
-  public async markAsSeen (options) {
-    options.status = 'seen';
-    return await this.updateStatus(options);
-  }
-
-  public async getUnreadMessageCount (options: any = {}) {
-    options.status = 'read';
-    return await this.getMessageCount(options);
-  }
-
-  public async getUnseenMessageCount (options) {
-    options.status = 'seen';
-    return await this.getMessageCount(options);
-  }
-
-  public async getUserNotifications (options) {
-    return await this.makeRequest(
-      Object.assign(
-        { url: `${this.notificationEngineEndpoint}/user-notifications`, method: 'get' },
-        { params: options },
-      ),
-    );
-  }
-
-  private async getMessageCount (options) {
-    return await this.makeRequest(
-      Object.assign(
-        { url: `${this.notificationEngineEndpoint}/user-notification/count`, method: 'get' },
-        { params: options },
-      ),
-    );
-  }
-
-  private async updateStatus (options) {
-    return await this.makeRequest(
-      Object.assign(
-        { url: `${this.notificationEngineEndpoint}/user-notification`, method: 'put' },
-        { params: options },
-      ),
-    );
-  }
-
   /**
    *
    * @param {*} options
    * https://instarem.atlassian.net/wiki/spaces/NINSTA/pages/39059457/Notification+API
    */
   private async makeRequest (options) {
-    if (!config.get('default.notifications.NOTIFICATION_SERVICE_ENABLED')) {
+    if (!this.notificationConfig.NOTIFICATION_SERVICE_ENABLED) {
       return;
     }
 
-    if (!this.appKey) {
+    if (!this.notificationConfig.NOTIFICATION_SECRET_KEY) {
       throw new Error(
         'Notification Service Api Secret is not provided. Please store your App Secret Key in the config property "NOTIFICATION_SECRET_KEY"',
       );
     }
-    if (!this.notificationEngineEndpoint) {
+    if (!this.notificationConfig.NOTIFICATION_ENDPOINT) {
       throw new Error(
         'Notification Service URL is not provided. Please store notification endpoint in the config property "NOTIFICATION_SERVICE_URL"',
         );
@@ -109,24 +62,22 @@ export class NotificationService implements INotificationService {
     }));
     options.headers = {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.appKey}`,
+      Authorization: `Bearer ${this.notificationConfig.NOTIFICATION_SECRET_KEY}`,
     };
 
     return await axios(options);
   }
 
+  @postConstruct()
   private initializeService() {
-    if (!config.has('default.notifications.NOTIFICATION_ENDPOINT')) {
+    if (!this.notificationConfig.NOTIFICATION_ENDPOINT) {
       this.loggerService.error(`NOTIFICATION_ENDPOINT is not configured for ${process.env.NODE_ENV}`);
       return;
     }
 
-    if (!config.has('default.notifications.NOTIFICATION_SECRET_KEY')) {
+    if (!this.notificationConfig.NOTIFICATION_SECRET_KEY) {
       this.loggerService.error(`NOTIFICATION_SECRET_KEY is not configured for ${process.env.NODE_ENV}`);
       return;
     }
-
-    this.notificationEngineEndpoint = config.get('default.notifications.NOTIFICATION_ENDPOINT');
-    this.appKey = config.get('default.notifications.NOTIFICATION_SECRET_KEY');
   }
 }

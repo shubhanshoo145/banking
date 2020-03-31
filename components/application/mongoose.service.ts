@@ -3,10 +3,11 @@ import { IConfig } from 'config';
 import * as mongoose from 'mongoose';
 
 import types from '../../constants/types';
-import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 import container from '../../container';
+import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 import { IApplication } from '../../commons/interfaces/services/IApplication';
 import { IMongooseService } from './application.interfaces';
+import { IMongooseConfig } from '../../commons/interfaces/config/IMongooseConfig';
 
 
 @injectable()
@@ -15,7 +16,7 @@ export class MongooseService implements IMongooseService {
   
   public connection: mongoose.Connection;
 
-  private dbConfig: any;
+  private dbConfig: IMongooseConfig;
   private connectionOptions: mongoose.ConnectionOptions = {
     autoIndex: false,
     autoReconnect: true,
@@ -31,11 +32,7 @@ export class MongooseService implements IMongooseService {
   };
 
   constructor(@inject(types.Config) config: IConfig) {
-    if (config.has('default.mongoose')) {
-      this.dbConfig = config.get('default.mongoose');
-    } else {
-      throw new Error('No mongoose configuration found');
-    }
+    this.dbConfig = config.get('default.mongoose');
   }
   
   public async openConnection(): Promise<void> {

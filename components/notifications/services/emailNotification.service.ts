@@ -1,13 +1,13 @@
-import * as config from 'config';
+import { IConfig } from 'config';
 import { inject, injectable } from 'inversify';
 import * as moment from 'moment';
 
-
-import { TemplateItemType } from '../infrastructure/templateGenerator.constants';
-import { IErrorLoggedEvent } from "../../../commons/interfaces/events/IErrorLoggedEvent";
-import { IEmailNotificationService, INotificationEngineRequest, IEmailTemplateGeneratorService } from '../notification.interfaces';
 import types from '../../../constants/types';
+import { TemplateItemType } from '../infrastructure/templateGenerator.constants';
+import { IEmailNotificationService, INotificationEngineRequest, IEmailTemplateGeneratorService } from '../notification.interfaces';
+import { IErrorLoggedEvent } from "../../../commons/interfaces/events/IErrorLoggedEvent";
 import { INotificationService } from '../../../commons/interfaces/services/INotificationService';
+import { INotificationConfig } from '../../../commons/interfaces/config/INotificationConfig';
 
 
 @injectable()
@@ -15,17 +15,23 @@ export class EmailNotificationService implements IEmailNotificationService {
   @inject(types.NotificationService) private notificationService: INotificationService;
   @inject(types.EmailTemplateGeneratorService) private readonly templateGeneratorService: IEmailTemplateGeneratorService;
 
+  private notificationConfig: INotificationConfig;
+
+  constructor(@inject(types.Config) config: IConfig) {
+    this.notificationConfig = config.get('default.notifications');
+  }
+
   /**
    * @public @async @function
    * @param errorEvent An object representing an error logged event
    * @description This method sends an email notification regarding masspay errors
    */
   public async sendErrorNotification(errorEvent: IErrorLoggedEvent): Promise<void> {
-    if (!config.has('default.notifications.MAIL_ERRORS_TO')) {
+    if (!this.notificationConfig.MAIL_ERRORS_TO) {
       return;
     }
 
-    const recipients: string[] = config.get('default.notifications.MAIL_ERRORS_TO');
+    const recipients: string[] = this.notificationConfig.MAIL_ERRORS_TO;
 
     await this.notificationService
       .createNotification({

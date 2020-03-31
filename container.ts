@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
-import config = require('config');
 import { Model } from 'mongoose';
+import * as config from 'config';
 
 const container = new Container({ defaultScope: 'Singleton' });
 

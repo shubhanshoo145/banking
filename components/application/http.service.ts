@@ -7,6 +7,7 @@ import types from '../../constants/types';
 import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 import { IHttpService, IHttpRouter } from './application.interfaces';
 import { IMiddlewareProvider } from '../../commons/interfaces/middleware/IMiddlewareProvider';
+import { IHttpServerConfig } from '../../commons/interfaces/config/IHttpServerConfig';
 
 @injectable()
 export class HttpService implements IHttpService {
@@ -18,7 +19,7 @@ export class HttpService implements IHttpService {
   public webServer: express.Express;
   public httpServer: Server;
 
-  private httpServerConfig: any;
+  private httpServerConfig: IHttpServerConfig;
 
   constructor(@inject(types.Config) config: IConfig) {
     this.httpServerConfig = config.get('default.httpServer');
@@ -34,8 +35,8 @@ export class HttpService implements IHttpService {
     this.errorMiddleware.register(this.webServer);
 
     this.httpServer = new Server(this.webServer);
-    this.httpServer.setTimeout(120000);
-    this.httpServer.keepAliveTimeout = 120000;
+    this.httpServer.setTimeout(this.httpServerConfig.REQUEST_TIMEOUT);
+    this.httpServer.keepAliveTimeout = this.httpServerConfig.KEEPALIVE_TIMEOUT;
 
     try {
       this.httpServer.listen(this.httpServerConfig.PORT, () => {
