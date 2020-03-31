@@ -1,7 +1,6 @@
-FROM node:10.16.3-jessie
-WORKDIR /usr/src/app
-COPY package.json .
-RUN yarn install
-COPY . .
-EXPOSE 4703
-ENTRYPOINT node index.js
+from node:12.13.1-stretch
+RUN sed -i '/stretch-updates/d' /etc/apt/sources.list
+RUN apt-get update -y
+RUN apt-get install -y mongodb
+RUN npm install -g mongo-restore
+RUN npm install -g migrate-mongo

@@ -1,9 +1,11 @@
-node_modules
-npm_debug.log
 *.log
 .idea/
 .DS_Store
-.vscode/
-*.demo.js
-env/
-package-lock.json
+
+.vscode/*
+!.vscode/launch.json
+
+node_modules
+dist/
+docker/
+.env
