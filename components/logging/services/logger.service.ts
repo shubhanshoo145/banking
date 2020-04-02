@@ -4,21 +4,25 @@ import { injectable, inject } from 'inversify';
 import * as moment from 'moment';
 import { Document, Model, Types } from 'mongoose';
 
+import types from '../../../constants/types';
 import { createLogger, format, Logger, transports } from 'winston';
 import { EmailTransport } from '../infrastructure/email.transport';
 import { ILoggerService } from '../../../commons/interfaces/services/ILoggerService';
-import types from '../../../constants/types';
+import { INotificationConfig } from '../../../commons/interfaces/config/INotificationConfig';
 
 @injectable()
 export class LoggerService implements ILoggerService {
   private winston: Logger;
-  private MAX_TRANSFORMATION_DEPTH: number = 5;
+  private notificationConfig: INotificationConfig;
+  private readonly MAX_TRANSFORMATION_DEPTH: number = 5;
 
   constructor(@inject(types.Config) config: IConfig) {
+    this.notificationConfig = config.get('default.notifications');
+
     this.winston = createLogger({
       transports: [
         new transports.Console({
-          level: config.has('default.logging.LOGGER_LEVEL') ? config.get('default.logging.LOGGER_LEVEL') : 'info',
+          level: 'info',
           format: format.combine(
             format.timestamp(),
             format.json(),
@@ -29,7 +33,7 @@ export class LoggerService implements ILoggerService {
       exitOnError: false,
     });
 
-    if (config.has('default.notifications.MAIL_ERRORS_TO')) {
+    if (this.notificationConfig.MAIL_ERRORS_TO) {
       this.winston.add(new EmailTransport({
         level: 'error',
         format: format.combine(

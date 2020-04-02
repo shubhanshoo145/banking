@@ -27,7 +27,7 @@ const config: IServiceConfig = {
     NOTIFICATION_SERVICE_ENABLED: false,
     NOTIFICATION_ENDPOINT: '',
     NOTIFICATION_SECRET_KEY_ENCRYPTED: 'yourSecretKey',
-    NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(this.default.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
+    NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(config.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
     MAIL_ERRORS_TO: [],
   },
   reuters: {
