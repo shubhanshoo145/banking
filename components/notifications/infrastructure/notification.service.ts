@@ -55,7 +55,7 @@ export class NotificationService implements INotificationService {
         );
     }
     Joi.assert(options, Joi.object().options({ abortEarly: false }).keys({
-      method: Joi.string().valid(['post', 'get', 'put']).required(),
+      method: Joi.string().valid(...['post', 'get', 'put']).required(),
       url: Joi.string().required(),
       params: Joi.object().optional(),
       data: Joi.object().optional(),
