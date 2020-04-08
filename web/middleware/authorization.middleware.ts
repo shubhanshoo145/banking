@@ -30,10 +30,10 @@ export class AuthorizationMiddleware implements IMiddlewareProvider {
         throw new Error('Missing authorization header');
       }
 
-      const bytes = cryptoJs.AES.decrypt(authorizationHeader, this.middlewareConfig.AUTH_SECRET);
+      const bytes = cryptoJs.AES.decrypt(authorizationHeader, this.middlewareConfig.AUTH_KEY);
       const plaintext = bytes.toString(cryptoJs.enc.Utf8);
 
-      if (plaintext !== this.middlewareConfig.AUTH_KEY) {
+      if (plaintext !== this.middlewareConfig.AUTH_SECRET) {
         this.loggerService.info('Authorization header is incorrect', {
           url: req.url,
           headers: req.headers,
