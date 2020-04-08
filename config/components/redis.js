@@ -1,7 +1,7 @@
 function config() {
   if (process.env.NODE_ENV === 'production') {
     return {
-      dbURI: 'instaremrediscluster.jeclmu.ng.0001.euw1.cache.amazonaws.com',
+      dbURI: 'prodrediscluster.jeclmu.ng.0001.euw1.cache.amazonaws.com',
       port: '6379',
       password: '',
     };
@@ -25,7 +25,7 @@ function config() {
       dbURI: 'preprodrediscluster.lydffc.0001.euw1.cache.amazonaws.com',
       port: '6379',
       password: '',
-    }
+    };
   }
 
   return {
