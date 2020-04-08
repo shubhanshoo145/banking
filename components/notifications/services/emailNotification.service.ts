@@ -39,7 +39,7 @@ export class EmailNotificationService implements IEmailNotificationService {
         email_message: {
           type: 'Error notification',
           custom: {
-            title: `Masspay error @ ${moment().format('YYYY-MM-DD HH:mm:ssZ')}`,
+            title: `Reuters error @ ${moment().format('YYYY-MM-DD HH:mm:ssZ')}`,
             body: this.templateGeneratorService.generateInternalTemplate([{
               type: TemplateItemType.STRING,
               value: `Level: ${errorEvent.level}<br/>
@@ -49,8 +49,8 @@ export class EmailNotificationService implements IEmailNotificationService {
               Error JSON<br/><code>${JSON.stringify(errorEvent.meta)}</code>`,
             }]),
             content_type: 'text/html',
-            sender_identifier: 'masspay@instarem.com',
-            sender_name: 'Masspay',
+            sender_identifier: 'reuters@instarem.com',
+            sender_name: 'Reuters',
           },
           extras: {},
           params: {},
