@@ -21,16 +21,16 @@ export class ErrorMiddleware implements IMiddlewareProvider {
   private handleError(err: any, req: Request, res: Response, next: NextFunction) {
     this.loggerService.error('An unexpected error occured while processing a request', { 
       err,
-      headers: req.headers,
-      rawHeaders: req.rawHeaders,
-      authHeader: req.headers['authorization'],
-      uri: req.url,
-      baseUri: req.baseUrl,
-      body: req.body,
-      query: req.query,
-      params: req.params,
-      cookies: req.cookies,
-      method: req.method,
+      headers: req?.headers,
+      rawHeaders: req?.rawHeaders,
+      authHeader: req?.headers['authorization'],
+      uri: req?.url,
+      baseUri: req?.baseUrl,
+      body: req?.body,
+      query: req?.query,
+      params: req?.params,
+      cookies: req?.cookies,
+      method: req?.method,
     });
 
     res.status(err.status || 500).json({

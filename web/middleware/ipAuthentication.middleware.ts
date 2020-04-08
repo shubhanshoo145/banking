@@ -23,24 +23,28 @@ export class IpAuthenticationMiddleware implements IMiddlewareProvider {
   }
 
   private async authenticate(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const rawIpAddress = req.header('x-forwarded-for') ||
-      req.connection.remoteAddress ||
-      req.socket.remoteAddress;
+    try {
+      const rawIpAddress = req.header('x-forwarded-for') ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress;
 
-    const splitAddress = rawIpAddress.split(':');
-    const ipAddress = splitAddress.length > 1 ?
-      splitAddress[splitAddress.length - 1] : rawIpAddress;
+      const splitAddress = rawIpAddress.split(':');
+      const ipAddress = splitAddress.length > 1 ?
+        splitAddress[splitAddress.length - 1] : rawIpAddress;
 
-    if (
-      !this.isWhitelistedIp(ipAddress, this.middlewareConfig.WHITELISTED_IPS) &&
-      !this.isWhitelistedSubnet(ipAddress, this.middlewareConfig.WHITELISTED_SUBNETS)
-    ) {
-      this.loggerService.info('Denied access to IP', {
-        ipAddress,
-      });
-      return next(new Error('IP Address not whitelisted'));
+      if (
+        !this.isWhitelistedIp(ipAddress, this.middlewareConfig.WHITELISTED_IPS) &&
+        !this.isWhitelistedSubnet(ipAddress, this.middlewareConfig.WHITELISTED_SUBNETS)
+      ) {
+        this.loggerService.info('Denied access to IP', {
+          ipAddress,
+        });
+        throw new Error('IP Address not whitelisted');
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
   }
 
   private isWhitelistedIp(ipAddress: string, whitelistedIpAddresses: string[]): boolean {

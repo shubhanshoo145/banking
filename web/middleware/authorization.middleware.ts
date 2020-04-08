@@ -23,24 +23,27 @@ export class AuthorizationMiddleware implements IMiddlewareProvider {
   }
 
   private async authorize(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const authorizationHeader = req.headers?.authorization;
+    try {
+      const authorizationHeader = req.headers?.authorization;
 
-    if (!authorizationHeader) {
-      return next(new Error('Missing authorization header'));
-    }
+      if (!authorizationHeader) {
+        throw new Error('Missing authorization header');
+      }
 
-    const bytes = cryptoJs.AES.decrypt(authorizationHeader, this.middlewareConfig.AUTH_SECRET);
-    const plaintext = bytes.toString(cryptoJs.enc.Utf8);
+      const bytes = cryptoJs.AES.decrypt(authorizationHeader, this.middlewareConfig.AUTH_SECRET);
+      const plaintext = bytes.toString(cryptoJs.enc.Utf8);
 
-    if (plaintext !== this.middlewareConfig.AUTH_KEY) {
-      this.loggerService.info('Authorization header is incorrect', {
-        url: req.url,
-        headers: req.headers,
-      });
-    
-      return next(new Error('Incorrect authorization header'));
+      if (plaintext !== this.middlewareConfig.AUTH_KEY) {
+        this.loggerService.info('Authorization header is incorrect', {
+          url: req.url,
+          headers: req.headers,
+        });
       
+       throw new Error('Incorrect authorization header');
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
   }
 }
