@@ -19,7 +19,7 @@ export class HttpRouter implements IHttpRouter {
   }
 
   public register(webServer: Express): void {
-    webServer.use('/v1', this.router);
+    webServer.use('/api/v1', this.router);
   }
 
   @postConstruct()
