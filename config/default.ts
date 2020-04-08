@@ -42,6 +42,8 @@ const config: IServiceConfig = {
     AUTH_SECRET: 'comsumingreutersrateservice',
     WHITELISTED_IPS: [
       '127.0.0.1',
+      '172.16.0.242',
+      '103.104.226.242',
       '54.76.218.89',
       '34.240.118.197',
       '161.202.19.190',

@@ -21,7 +21,7 @@ const config: Pick<IServiceConfig, 'mongoose' | 'notifications' | 'redis'> = {
     NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(config.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
     MAIL_ERRORS_TO: ['dev_vilnius@instarem.com', 'amber.rai@instarem.com'],  },
   redis: {
-    URI: 'instaremrediscluster.jeclmu.ng.0001.euw1.cache.amazonaws.com',
+    URI: 'prodrediscluster.jeclmu.ng.0001.euw1.cache.amazonaws.com',
     PORT: 6379,
     ENCRYPTED_PASSWORD: null,
     PASSWORD: deferConfig(() => EncryptionService.decrypt(config.redis.ENCRYPTED_PASSWORD)),
