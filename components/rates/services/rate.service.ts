@@ -14,10 +14,6 @@ export class RateService implements IRateService {
   @inject(types.RedisService) private readonly redisService: IRedisService;
   @inject(types.RateRepository) private readonly rateRepository: IRateRepository;
 
-  public async getRate(currencyPair: ICurrencyPair): Promise<IRate> {
-    throw new Error('Not implemented yet');
-  }
-
   public async getRates(currencyPairs: ICurrencyPair[]): Promise<IRate[]> {
     const reutersResponses = await this.reutersService.getRates(currencyPairs);
   
