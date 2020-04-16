@@ -15,12 +15,6 @@
       "incremental": true,
     },
     "include": [
-        "./**/*"
-    ],
-    "exclude": [
-      "./dist",
-      "./node_modules",
-      "./encrypt.js",
-      "./decrypt.js",
+      "src/**/*"
     ]
   }
