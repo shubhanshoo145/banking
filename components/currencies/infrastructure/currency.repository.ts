@@ -19,6 +19,6 @@ export class CurrencyRepository implements ICurrencyRepository {
       searchQuery.currency_code = { $in: currencyCodes };
     }
 
-    return await this.model.find({ is_active: true }).lean();
+    return await this.model.find(searchQuery).lean();
   }
 }
