@@ -1,6 +1,4 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { IConfig } from 'config';
-import * as moment from 'moment';
 
 import container from '../../container';
 import types from '../../constants/types';
