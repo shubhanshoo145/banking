@@ -13,7 +13,7 @@ const rateSchema = new Schema({
     },
     fx_rate: {
       type: Number,
-      required: true,
+      required: false,
     },
     expires_at: {
       type: Date,
