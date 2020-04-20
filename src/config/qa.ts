@@ -25,7 +25,7 @@ const config: Pick<IServiceConfig, 'mongoose' | 'redis' | 'notifications'> = {
     NOTIFICATION_ENDPOINT: 'http://172.16.11.222:4751/api/v1',
     NOTIFICATION_SECRET_KEY_ENCRYPTED: 'yohD7/8MpgJADeGnBeRtkDUbMvJpOkisuuG2X77TgDV+ZW6cAKqnAgswj/zhEgchihl1kw2xx8ZJampyEtWsQPt4MsUZuC390zrt7/Vhw8W/xzeANqusU91CXeo20jAH1s4/hsdn+ewhvTTR/HYjWx/w9aiK1UakEyao4Kc=',
     NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(config.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
-    MAIL_ERRORS_TO: [],
+    MAIL_ERRORS_TO: ['pavelas.morozovas@instarem.com'],
   },
 };
 
