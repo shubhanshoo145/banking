@@ -3,6 +3,7 @@ import { IConfig } from 'config';
 import { injectable, inject } from 'inversify';
 import * as moment from 'moment';
 import { Document, Model, Types } from 'mongoose';
+import { AxiosError } from 'axios';
 
 import types from '../../../constants/types';
 import { createLogger, format, Logger, transports } from 'winston';
@@ -97,6 +98,19 @@ export class LoggerService implements ILoggerService {
       const resultObject = Object.create(transformedNode);
 
       if (node instanceof Error) {
+        if ((node as any).isAxiosError) {
+          const typedError = node as AxiosError<any>;
+          return {
+            errorMessage: typedError.message,
+            errorStack: typedError.stack,
+            errorData: {
+              config: typedError.config,
+              request: typedError.request,
+              response: typedError.response,
+            },
+          }
+        }
+
         return {
           errorMessage: node.message,
           errorStack: node.stack,

@@ -46,9 +46,6 @@ export class ReutersApi implements IReutersApi {
     } catch (error) {
       this.loggerService.error('An error has been encountered while trying to get rates', {
         error,
-        config: error.config,
-        request: error.request,
-        response: error.response
       });
       throw error;
     }
