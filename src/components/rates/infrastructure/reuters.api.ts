@@ -42,10 +42,6 @@ export class ReutersApi implements IReutersApi {
         }
       });
 
-      this.loggerService.debug('Raw response from Reuters', {
-        rawResponse: response.data,
-      });
-
       return response.data;
     } catch (error) {
       this.loggerService.error('An error has been encountered while trying to get rates', {
