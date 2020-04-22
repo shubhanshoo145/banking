@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  mongo:
+    image: 'mongo:3.4.10'
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./docker/mongo-volume:/data/db
+  redis:
+    image: 'redis:3.2.11'
+    ports:
+      - '6379:6379'
+  reuters:
+    build: ./
+    user: 'node'
+    working_dir: /home/node/app
+    depends_on:
+       - mongo
+       - redis
+    volumes:
+      - ./:/home/node/app/:cached
+    ports:
+      - '4703:4703'
+      - '9055:9055'
+    command: bash -c "printf 'Installing npm...\n' && npm prune && npm install && node_modules/tsc-watch/index.js --onSuccess 'node --inspect=0.0.0.0:9055 dist/index.js' --compiler typescript/bin/tsc"

@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach to Reuters",
+      "port": 9055,
+      "restart": true,
+      "timeout": 60000,
+      "sourceMaps": true,
+      "localRoot": "${workspaceRoot}",
+      "remoteRoot": "/home/node/app/"
+    },
+  ]
+}

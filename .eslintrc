@@ -1,5 +1,12 @@
 {
-  "extends": "airbnb-base",
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "airbnb-typescript"
+  ],
+
   "rules": {
     "eol-last": "off",
     "no-underscore-dangle": "off",
@@ -10,7 +17,12 @@
     "consistent-return": "off",
     "no-shadow": "off",
     "dot-notation": "off",
-    "object-shorthand": "off"
+    "object-shorthand": "off",
+    "@typescript-eslint/no-await-in-loop": "off",
+    "@typescript-eslint/object-literal-sort-keys": 1,
+    "@typescript-eslint/align": false,
+    "@typescript-eslint/no-trailing-whitespace": [true, "ignore-blank-lines"],
+    "@typescript-eslint/object-literal-shorthand": false
   },
   "env": {
     "node": true,
@@ -18,6 +30,7 @@
   },
   "globals": {
     "rootRequire": true,
-    "logger": true
+    "logger": true,
+    "backendEvents": true
   }
 }
