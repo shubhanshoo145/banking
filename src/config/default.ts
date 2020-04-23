@@ -35,7 +35,9 @@ const config: IServiceConfig = {
     REUTERS_RATE_URL: 'http://api.rkd.reuters.com/api/Quotes/Quotes.svc/REST/Quotes_1/RetrieveItem_3',
     REUTERS_APPLICATION_ID: 'PrajitInstaremCom',
     REUTERS_USERNAME: 'prajit@instarem.com',
-    REUTERS_PASSWORD: 'Instarem123'
+    REUTERS_PASSWORD: 'Instarem123',
+    REUTERS_RETRY_ATTEMPTS: 3,
+    REUTERS_RETRY_TIMEOUT: 15000,
   },
   middleware: {
     AUTH_KEY: 'Ins#ta@re!m1771%90',

@@ -32,6 +32,7 @@ export class EmailNotificationService implements IEmailNotificationService {
     }
 
     const recipients: string[] = this.notificationConfig.MAIL_ERRORS_TO;
+    const error = JSON.stringify(errorEvent.meta);
 
     await this.notificationService
       .createNotification({
@@ -46,7 +47,7 @@ export class EmailNotificationService implements IEmailNotificationService {
               Message: ${errorEvent.message}<br/>
               Timestamp: ${errorEvent.timestamp}<br/><br/>
       
-              Error JSON<br/><code>${JSON.stringify(errorEvent.meta, this.getCircularReplacer())}</code>`,
+              Error JSON<br/><code>${error}</code>`,
             }]),
             content_type: 'text/html',
             sender_identifier: 'reuters@instarem.com',
@@ -60,21 +61,5 @@ export class EmailNotificationService implements IEmailNotificationService {
           service: 'sendgrid',
         },
       } as INotificationEngineRequest);
-  }
-
-  // TODO: Move this to a better place
-  private getCircularReplacer() {
-    return () => {
-      const seen = new WeakSet();
-      return (key, value) => {
-        if (typeof value === "object" && value !== null) {
-          if (seen.has(value)) {
-            return;
-          }
-          seen.add(value);
-        }
-        return value;
-      };
-    };
   }
 }
