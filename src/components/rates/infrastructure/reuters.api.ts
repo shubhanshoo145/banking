@@ -21,13 +21,14 @@ export class ReutersApi implements IReutersApi {
 
   public async getRates(currencyPairs: Array<{ Name: string, NameType: string }>): Promise<IReutersRateResponse> {
     try {
+      const token = await this.getToken();
       const response: AxiosResponse<IReutersRateResponse> = await axios({
         method: 'POST',
         url: this.config.REUTERS_RATE_URL,
         headers: {
           'content-type': 'application/json',
           'X-Trkd-Auth-ApplicationID': this.config.REUTERS_APPLICATION_ID,
-          'X-Trkd-Auth-Token': await this.getToken(),
+          'X-Trkd-Auth-Token': token.Token,
         },
         data: {
           RetrieveItem_Request_3: {
@@ -41,7 +42,6 @@ export class ReutersApi implements IReutersApi {
           }
         }
       });
-
       return response.data;
     } catch (error) {
       this.loggerService.error('An error has been encountered while trying to get rates', {
@@ -51,16 +51,15 @@ export class ReutersApi implements IReutersApi {
         url: error.config.url,
         responseData: error.response.data,
       });
-      throw error;
+      return null;
     }
   }
 
-  private async getToken(): Promise<string> {
-    if (!this.token || moment(this.token.Expiration).isSameOrBefore(moment())) {
+  private async getToken(): Promise<IReutersToken> {
+    if (!this.token || (moment.utc(this.token.Expiration)).isSameOrBefore(moment.utc())) {
       this.token = await this.retrieveToken();
     }
-
-    return this.token.Token;
+    return this.token;
   }
 
   private async retrieveToken(): Promise<IReutersToken> {
@@ -77,7 +76,11 @@ export class ReutersApi implements IReutersApi {
           Password: this.config.REUTERS_PASSWORD,
         },
       }
-    })
+    });
+
+    this.loggerService.info('Retrieved reuters token', {
+      token: response.data.CreateServiceToken_Response_1,
+    });
 
     return response.data.CreateServiceToken_Response_1;
   }

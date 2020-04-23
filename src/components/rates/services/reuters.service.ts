@@ -3,10 +3,18 @@ import { injectable, inject } from 'inversify';
 import types from '../../../constants/types';
 import { IReutersService, IReutersApi, IReutersResponseItem, IReutersRateResponse } from '../rate.interfaces';
 import { ICurrencyPair } from '../../../commons/interfaces/entities/ICurrencyPair';
+import { IConfig } from 'config';
+import { IReutersConfig } from '../../../commons/interfaces/config/IReutersConfig';
 
 @injectable()
 export class ReutersService implements IReutersService {
   @inject(types.ReutersApi) private readonly reutersApi: IReutersApi;
+
+  private reutersConfig: IReutersConfig;
+
+  constructor(@inject(types.Config) config: IConfig) {
+    this.reutersConfig = config.get('default.reuters');
+  }
 
   public async getRates(currencyPairs: ICurrencyPair[]): Promise<IReutersResponseItem[]> {
     const apiResponses = [];
@@ -17,8 +25,23 @@ export class ReutersService implements IReutersService {
         currencyPair => currencyPair.reutersInstrumentCode
       );
       
-      const apiResponse = await this.reutersApi.getRates(currencyPairIdentifiers);
-      apiResponses.push(apiResponse);
+      let attempt = 0;
+      while (attempt < this.reutersConfig.REUTERS_RETRY_ATTEMPTS) {
+        const apiResponse = await this.reutersApi.getRates(currencyPairIdentifiers);
+
+        if (!apiResponse) {
+          await new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve();
+            }, this.reutersConfig.REUTERS_RETRY_TIMEOUT);
+          });
+          attempt += 1;
+          continue;
+        }
+
+        apiResponses.push(apiResponse);
+        break;
+      }      
     }
     return this.extractAndMergeResponses(apiResponses);
   }
