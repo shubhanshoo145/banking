@@ -98,20 +98,6 @@ export class LoggerService implements ILoggerService {
       const resultObject = Object.create(transformedNode);
 
       if (node instanceof Error) {
-        // TODO: Fix this
-        // if ((node as any).isAxiosError) {
-        //   const typedError = node as AxiosError<any>;
-        //   return {
-        //     errorMessage: typedError.message,
-        //     errorStack: typedError.stack,
-        //     errorData: {
-        //       config: typedError.config,
-        //       request: typedError.request,
-        //       response: typedError.response,
-        //     },
-        //   }
-        // }
-
         return {
           errorMessage: node.message,
           errorStack: node.stack,
