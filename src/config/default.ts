@@ -37,7 +37,7 @@ const config: IServiceConfig = {
     REUTERS_USERNAME: 'prajit@instarem.com',
     REUTERS_PASSWORD: 'Instarem123',
     REUTERS_RETRY_ATTEMPTS: 3,
-    REUTERS_RETRY_TIMEOUT: 15000,
+    REUTERS_RETRY_TIMEOUT: 5000,
   },
   middleware: {
     AUTH_KEY: 'Ins#ta@re!m1771%90',
