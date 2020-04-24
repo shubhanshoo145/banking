@@ -6,6 +6,7 @@ import { ICurrencyService } from '../../commons/interfaces/services/ICurrencySer
 import { IRateService } from '../../commons/interfaces/services/IRateService';
 import { ICurrencyPair } from '../../commons/interfaces/entities/ICurrencyPair';
 import { CurrencyPair } from '../../components/currencies/entities/currencyPair';
+import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
 
 export default (router: Router) => {
   router.post('/cronjobs/getRates', async (req: Request, res: Response, next: NextFunction) => {
@@ -14,6 +15,9 @@ export default (router: Router) => {
 
       const currencyService = container.get<ICurrencyService>(types.CurrencyService);
       const rateService = container.get<IRateService>(types.RateService);
+      const loggerService = container.get<ILoggerService>(types.LoggerService);
+
+      loggerService.info('Starting cronjob');
 
       const currencies = await currencyService.getCurrencies();
       const currencyPairs: ICurrencyPair[] = [];
@@ -30,6 +34,8 @@ export default (router: Router) => {
         rateService.storeRates(rates),
         rateService.postRates(rates),
       ]);
+
+      loggerService.info('Finished executing cronjob');
     } catch (error) {
       next(error);
     }
