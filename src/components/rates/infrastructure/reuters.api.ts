@@ -56,7 +56,7 @@ export class ReutersApi implements IReutersApi {
   }
 
   private async getToken(): Promise<IReutersToken> {
-    if (!this.token || (moment.utc(this.token.Expiration)).isSameOrBefore(moment.utc())) {
+    if (!this.token || (moment.utc(this.token.Expiration)).isSameOrBefore(moment.utc().add(5, 'minutes'))) {
       this.token = await this.retrieveToken();
     }
     return this.token;
