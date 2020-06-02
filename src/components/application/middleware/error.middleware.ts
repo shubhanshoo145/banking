@@ -19,7 +19,7 @@ export class ErrorMiddleware implements IMiddlewareProvider {
   }
 
   private handleError(err: any, req: Request, res: Response, next: NextFunction) {
-    this.loggerService.error('An unexpected error occured while processing a request', { 
+    const metadata = { 
       err,
       headers: req?.headers,
       rawHeaders: req?.rawHeaders,
@@ -31,7 +31,15 @@ export class ErrorMiddleware implements IMiddlewareProvider {
       params: req?.params,
       cookies: req?.cookies,
       method: req?.method,
-    });
+    };
+
+
+    if (err.status >= 400 && err.status < 500) {
+      this.loggerService.info('A non-critical error has occurred', metadata);
+    } else {
+      this.loggerService.error('An unexpected error occured while processing a request', metadata);
+    }
+
 
     res.status(err.status || 500).json({
       message: err.message || 'Unexpected error occurred',
