@@ -33,13 +33,11 @@ export class ErrorMiddleware implements IMiddlewareProvider {
       method: req?.method,
     };
 
-
     if (err.status >= 400 && err.status < 500) {
       this.loggerService.info('A non-critical error has occurred', metadata);
     } else {
       this.loggerService.error('An unexpected error occured while processing a request', metadata);
     }
-
 
     res.status(err.status || 500).json({
       message: err.message || 'Unexpected error occurred',
