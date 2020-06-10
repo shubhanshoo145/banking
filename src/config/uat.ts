@@ -5,19 +5,19 @@ import { IServiceConfig } from '../commons/interfaces/config/IServiceConfig';
 
 const config: Pick<IServiceConfig, 'mongoose' | 'redis' | 'notifications'> = {
   mongoose: {
-    DB: 'masspay-v2-uat',
-    DB_URI: '161.202.19.190:27017',
-    DB_USERNAME: 'uatMasspay',
+    DB: 'masspay-v2-test',
+    DB_URI: '127.0.0.1:27017',
+    DB_USERNAME: 'app-masspay-v2-test',
     REPLICA_SET: null,
-    DB_PASSWORD_ENCRYPTED: '7gxG0g5mGX+AlEJv38JH9NbIS4Cu4MPYs4oIdxWWRzbEzM3XYLOj2hbmKhvfRKcKcqIfEORNIJ5yu0lK/lUgi/PpSlh62bALIG8Z+5Q6sYCEbPi0NfB2YWZQsFLVzUKOB9XZaPKUQEyOFa7m',
+    DB_PASSWORD_ENCRYPTED: '4vSMBcui3W6SODLrToTMUU4Q/zeCZivUsqt5lSFYw1vJYvIO3ypmg0IWPVWJMnXLndqN9VujHQC36+ImcXekmR6UwAZk6yWlvyGPwSXyLeLke7UfincVt9dKlaJotAcc4dINQL23d7fel3KhYBanEqvJ',
     DB_CONNECTION_STRING: deferConfig(() => {
       return `mongodb://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
     }),
   },
   redis: {
-    URI: '161.202.19.190',
+    URI: '127.0.0.1',
     PORT: 6379,
-    ENCRYPTED_PASSWORD: 'RwAqz8c8F9J6JnqkthtB+axOFKXaSiVQzPzOErhB3UJXIhdkjVX87CC/N5e3/g4clCqCloeIe2TH+ozbskKuknn1CXlfiP7HlU0mokxp/W1HWcp7S/5oqzPpzVSwu1EdyeSIVM3VKh5u9Q==',
+    ENCRYPTED_PASSWORD: null,
     PASSWORD: deferConfig(() => EncryptionService.decrypt(config.redis.ENCRYPTED_PASSWORD)),
   },
   notifications: {
