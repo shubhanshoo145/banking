@@ -31,8 +31,8 @@ const config: IServiceConfig = {
     MAIL_ERRORS_TO: [],
   },
   reuters: {
-    REUTERS_TOKEN_URL: 'https://api.rkd.reuters.com/api/TokenManagement/TokenManagement.svc/REST/Anonymous/TokenManagement_1/CreateServiceToken_1',
-    REUTERS_RATE_URL: 'http://api.rkd.reuters.com/api/Quotes/Quotes.svc/REST/Quotes_1/RetrieveItem_3',
+    REUTERS_TOKEN_URL: 'https://api.rkd.refinitiv.com/api/TokenManagement/TokenManagement.svc/REST/Anonymous/TokenManagement_1/CreateServiceToken_1',
+    REUTERS_RATE_URL: 'http://api.rkd.refinitiv.com/api/Quotes/Quotes.svc/REST/Quotes_1/RetrieveItem_3',
     REUTERS_APPLICATION_ID: 'PrajitInstaremCom',
     REUTERS_USERNAME: 'prajit@instarem.com',
     REUTERS_PASSWORD: 'Instarem123',
