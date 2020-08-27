@@ -15,7 +15,7 @@ export class ErrorMiddleware implements IMiddlewareProvider {
   }
 
   private handleNotFound(req: Request, res: Response, next: NextFunction) {
-    throw new Error('Endpoint not found');
+    res.status(404).send('Endpoint not found');
   }
 
   private handleError(err: any, req: Request, res: Response, next: NextFunction) {
