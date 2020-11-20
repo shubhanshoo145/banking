@@ -6,12 +6,12 @@ import { IServiceConfig } from '../commons/interfaces/config/IServiceConfig';
 const config: Pick<IServiceConfig, 'mongoose' | 'redis' | 'notifications'> = {
   mongoose: {
     DB: 'masspay-v2-test',
-    DB_URI: '172.16.12.223:27017',
-    REPLICA_SET: null,
+    DB_URI: 'send-qa-cluster.1oyey.mongodb.net',
+    REPLICA_SET: undefined,
     DB_USERNAME: 'qa-masspay-v2-test',
     DB_PASSWORD_ENCRYPTED: 'A81BNtQhjMJ6nHIfG/x65opsuqwIgGjfuCtmFYZR+oDNOV9vodUgkA3it3ea1g4gHcezdtcYMXMQ18VxdzUrh1UZxgJ7rx+583CXV9u3eJF+19TagTQjdzgOSEPwWkruEBH2ktJf0YHDkkQRW7oQc71W',
     DB_CONNECTION_STRING: deferConfig(() => {
-      return `mongodb://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
+      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
     }),
   },
   redis: {
