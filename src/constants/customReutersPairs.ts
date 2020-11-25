@@ -336,5 +336,5 @@ export enum CustomReutersPairs {
   THBKRW = 'THBKRW=R',
   NZDKRW = 'NZDKRW=R',
   COPJPY = 'COPJPY=X',
-  USDZMW = 'ZMW=X'
+  USDZMW = 'ZMW=X',
 }
