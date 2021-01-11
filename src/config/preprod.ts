@@ -6,12 +6,12 @@ import { IServiceConfig } from '../commons/interfaces/config/IServiceConfig';
 const config: Pick<IServiceConfig, 'mongoose' | 'notifications' | 'redis'> = {
   mongoose: {
     DB: 'masspay-v2-test',
-    DB_URI: '172.16.2.231:27017',
-    DB_USERNAME: 'preprodappuser',
-    DB_PASSWORD_ENCRYPTED: 'X50GoV4TU4vZK6WaT+TOxojJIsYxKTAehfm2lJrwR/T4m9XzlGQhFhaW0FBoz15gG8CswmScL4Aj5oJNFRw4YgcoYgK9Cl5mrpaD+tt935uGPfhhnNN6lsjE5jLXV5ojwZfgIxke29MW3DSg4pRv4Q==',
+    DB_URI: 'send-preprod-cluster.1oyey.mongodb.net',
+    DB_USERNAME: 'app-masspay-v2-test',
+    DB_PASSWORD_ENCRYPTED: 'Ily1fVwl1z/oxY/723aa+UVPqbO18ev/i0SGpoTS5H8FFQa42ftVT+zd7I3vEkdy1OC0ezDo/BP9ZQ2L4SSYYypOs3HTQY0iAXOD+LgiFXQr75fn5VshIZWFRpMPS/pNmquUHBwyDkj4jEEhKgha1g==',
     REPLICA_SET: undefined,
     DB_CONNECTION_STRING: deferConfig(() => {
-      return `mongodb://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
+      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
     }),
   },
   notifications: {
