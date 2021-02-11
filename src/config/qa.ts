@@ -11,7 +11,7 @@ const config: Pick<IServiceConfig, 'mongoose' | 'redis' | 'notifications'> = {
     DB_USERNAME: 'qa-masspay-v2-test',
     DB_PASSWORD_ENCRYPTED: 'A81BNtQhjMJ6nHIfG/x65opsuqwIgGjfuCtmFYZR+oDNOV9vodUgkA3it3ea1g4gHcezdtcYMXMQ18VxdzUrh1UZxgJ7rx+583CXV9u3eJF+19TagTQjdzgOSEPwWkruEBH2ktJf0YHDkkQRW7oQc71W',
     DB_CONNECTION_STRING: deferConfig(() => {
-      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
+      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}?retryWrites=true&w=majority`;
     }),
   },
   redis: {

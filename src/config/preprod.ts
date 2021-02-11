@@ -11,7 +11,7 @@ const config: Pick<IServiceConfig, 'mongoose' | 'notifications' | 'redis'> = {
     DB_PASSWORD_ENCRYPTED: 'Ily1fVwl1z/oxY/723aa+UVPqbO18ev/i0SGpoTS5H8FFQa42ftVT+zd7I3vEkdy1OC0ezDo/BP9ZQ2L4SSYYypOs3HTQY0iAXOD+LgiFXQr75fn5VshIZWFRpMPS/pNmquUHBwyDkj4jEEhKgha1g==',
     REPLICA_SET: undefined,
     DB_CONNECTION_STRING: deferConfig(() => {
-      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}`;
+      return `mongodb+srv://${config.mongoose.DB_USERNAME}:${EncryptionService.decrypt(config.mongoose.DB_PASSWORD_ENCRYPTED)}@${config.mongoose.DB_URI}/${config.mongoose.DB}?retryWrites=true&w=majority`;
     }),
   },
   notifications: {
