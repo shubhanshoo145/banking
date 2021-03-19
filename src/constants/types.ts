@@ -15,26 +15,12 @@ export default {
   // Logging
   LoggerService: Symbol.for('LoggerService'),
 
-  // Currencies
-  CurrencyService: Symbol.for('CurrencyService'),
-  CurrencyRepository: Symbol.for('CurrencyRepository'),
-  CurrencyModel: Symbol.for('CurrencyModel'),
-
-  // Rates
-  RateService: Symbol.for('RateService'),
-  RateRepository: Symbol.for('RateRepository'),
-  RateModel: Symbol.for('RateModel'),
-
-  // Reuters
-  ReutersService: Symbol.for('ReutersService'),
-  ReutersApi: Symbol.for('ReutersApi'),
-
-  BankingService: Symbol.for('BankingService'),
-
+  // Accounts
   AccountService: Symbol.for('AccountService'),
   AccountRepository: Symbol.for('AccountRepository'),
   AccountModel: Symbol.for('AccountModel'),
 
+  // Transactions
   TransactionModel: Symbol.for('TransactionModel'),
   TransactionRepository: Symbol.for('TransactionRepository'),
   TransactionService: Symbol.for('TransactionService'),

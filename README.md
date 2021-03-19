@@ -64,3 +64,7 @@ curl --location --request POST 'http://localhost:4703/api/v1/miniStatement' \
 #### Tech Stack
 - NodeJS
 - MongoDB (without ACID)
+
+#### Key Points
+- Pin is being saved as a hash for security purposes
+- MongoDB transactions hasn't been implemented here so in case of multiple containers we'll have consistency issues.

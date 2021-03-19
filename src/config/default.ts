@@ -4,7 +4,7 @@ import { IServiceConfig } from '../commons/interfaces/config/IServiceConfig';
 
 const config: IServiceConfig = {
   mongoose: {
-    DB: 'masspay-v2-staging',
+    DB: 'banking',
     DB_URI: 'host.docker.internal:27017',
     DB_USERNAME: null,
     DB_PASSWORD_ENCRYPTED: null,

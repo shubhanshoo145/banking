@@ -6,6 +6,8 @@ import { LoggerService } from "../../components/logging/services/logger.service"
 import types from "../../constants/types";
 import container from "../../container";
 
+// Account creation api
+
 export default (router: Router) => {
   router.post('/createAccount', async (req: Request, res: Response, next: NextFunction) => {
     const accountService = container.get<AccountService>(types.AccountService);

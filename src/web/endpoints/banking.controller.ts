@@ -5,6 +5,8 @@ import { TransactionService } from "../../components/transactions/transaction.se
 import types from "../../constants/types";
 import container from "../../container";
 
+// Banking apis
+
 export default (router: Router) => {
   router.post('/deposit', async (req: Request, res: Response, next: NextFunction) => {
     const accountService = container.get<AccountService>(types.AccountService);

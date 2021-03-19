@@ -7,7 +7,7 @@ services:
       - '27017:27017'
     volumes:
       - ./docker/mongo-volume:/Users/Shubhanshoo Agarwal/data/db
-      # the path needs to be changed in case of windows system
+      # the path needs to be changed to '/Users/<user>/data/db' in case of windows system
       # in case of linux based systems, this will be '/data/db'
   backend:
     build: ./
