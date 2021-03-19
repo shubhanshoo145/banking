@@ -14,6 +14,8 @@ export default (router: Router) => {
     const loggerService = container.get<ILoggerService>(types.LoggerService);
 
     try {
+      const response = await accountService.getAccountByAccountNumber(req.body.accountNumber);
+      if (!response) throw new Error('Account does not exist');
       const accountResponse = await accountService.depositToAccount(req.body.accountNumber, req.body.amount);
       const transctionObject = {
         account_id: accountResponse._id,

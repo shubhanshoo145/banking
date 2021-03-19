@@ -15,7 +15,7 @@ export interface IAccountDocument extends Document, IAccount {
 
 export interface IAccountRepository {
   updateAccountBalance(accountNumber: string, amount: number);
-  getAccountBalance(accountNumber: string);
+  getAccountByAccountNumber(accountNumber: string);
   createAccount(accountObject);
   getAccountByCardNumber(cardNumber: string);
 }
@@ -26,5 +26,5 @@ export interface IAccountService {
   getAccountByCardNumber(cardNumber: string): Promise<IAccount>;
   depositToAccount(accountNumber: string, amount: number): Promise<IAccount>;
   withdrawFromAccount(accountNumber: string, amount: number): Promise<IAccount>;
-  getAccountBalance(accountNumber: string): Promise<IAccount>;
+  getAccountByAccountNumber(accountNumber: string): Promise<IAccount>;
 }

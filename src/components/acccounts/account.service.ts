@@ -33,7 +33,7 @@ export class AccountService implements IAccountService {
     return await this.accountRepository.updateAccountBalance(accountNumber, amount * -1);
   }
 
-  public async getAccountBalance(accountNumber: string): Promise<IAccount> {
-    return await this.accountRepository.getAccountBalance(accountNumber);
+  public async getAccountByAccountNumber(accountNumber: string): Promise<IAccount> {
+    return await this.accountRepository.getAccountByAccountNumber(accountNumber);
   }
 }
