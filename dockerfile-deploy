@@ -1,8 +1,0 @@
-from node:12.13.1-stretch
-WORKDIR /usr/src/app
-COPY package.json .
-RUN npm install
-COPY . .
-RUN npm run build-jenkins
-EXPOSE 4703
-ENTRYPOINT node --max_old_space_size=3072 --async-stack-traces ./dist/index.js

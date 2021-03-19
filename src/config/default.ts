@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { deferConfig } from 'config/defer';
-import { EncryptionService } from '../components/application/encryption.service';
 import { IServiceConfig } from '../commons/interfaces/config/IServiceConfig';
 
 const config: IServiceConfig = {
@@ -12,69 +11,11 @@ const config: IServiceConfig = {
     DB_CONNECTION_STRING: deferConfig(() => `mongodb://${config.mongoose.DB_URI}/${config.mongoose.DB}`),
     REPLICA_SET: null,
   },
-  redis: {
-    URI: 'host.docker.internal',
-    PORT: 6379,
-    PASSWORD: deferConfig(() => EncryptionService.decrypt(config.redis.ENCRYPTED_PASSWORD)),
-    ENCRYPTED_PASSWORD: 'RwAqz8c8F9J6JnqkthtB+axOFKXaSiVQzPzOErhB3UJXIhdkjVX87CC/N5e3/g4clCqCloeIe2TH+ozbskKuknn1CXlfiP7HlU0mokxp/W1HWcp7S/5oqzPpzVSwu1EdyeSIVM3VKh5u9Q==',
-  },
   httpServer: {
     PORT: 4703,
     KEEPALIVE_TIMEOUT: 120000,
     REQUEST_TIMEOUT: 120000,
   },
-  notifications: {
-    NOTIFICATION_SERVICE_ENABLED: false,
-    NOTIFICATION_ENDPOINT: '',
-    NOTIFICATION_SECRET_KEY_ENCRYPTED: 'yourSecretKey',
-    NOTIFICATION_SECRET_KEY: deferConfig(() => EncryptionService.decrypt(config.notifications.NOTIFICATION_SECRET_KEY_ENCRYPTED)),
-    MAIL_ERRORS_TO: [],
-  },
-  reuters: {
-    REUTERS_TOKEN_URL: 'https://api.rkd.refinitiv.com/api/TokenManagement/TokenManagement.svc/REST/Anonymous/TokenManagement_1/CreateServiceToken_1',
-    REUTERS_RATE_URL: 'http://api.rkd.refinitiv.com/api/Quotes/Quotes.svc/REST/Quotes_1/RetrieveItem_3',
-    REUTERS_APPLICATION_ID: 'PrajitInstaremCom',
-    REUTERS_USERNAME: 'prajit@instarem.com',
-    REUTERS_PASSWORD: 'Instarem123',
-    REUTERS_RETRY_ATTEMPTS: 3,
-    REUTERS_RETRY_TIMEOUT: 5000,
-  },
-  middleware: {
-    AUTH_KEY: 'Ins#ta@re!m1771%90',
-    AUTH_SECRET: 'comsumingreutersrateservice',
-    WHITELISTED_IPS: [
-      '127.0.0.1',
-      '172.16.0.242',
-      '103.104.226.242',
-      '108.128.242.219',
-      '54.76.218.89',
-      '34.240.118.197',
-      '161.202.19.190',
-      '161.202.19.184',
-      '168.1.88.245',
-      '103.19.197.218',
-      '49.248.69.14',
-      '119.81.45.114',
-      '119.81.45.123',
-      '10.0.1.214',
-      '10.0.1.83',
-      '10.0.0.49',
-      '172.16.0.246',
-      '52.31.195.126',
-      '192.168.2.220',
-      '192.168.2.221',
-      '52.19.165.124',
-      '10.0.0.80',
-      '34.247.35.170',
-      '10.0.0.251',
-    ],
-    WHITELISTED_SUBNETS: [
-      /172\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/i,
-    ]
-  },
-  application: {
-    EXPIRY_MINUTES: 15,
-  }
 };
 
 export default config;

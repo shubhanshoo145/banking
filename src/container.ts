@@ -5,8 +5,6 @@ import * as config from 'config';
 const container = new Container({ defaultScope: 'Singleton' });
 
 import types from './constants/types';
-import currencyModel from './components/currencies/infrastructure/currency.model';
-import rateModel from './components/rates/infrastructure/rate.model';
 
 import { Application } from './components/application/application';
 import { MongooseService } from './components/application/mongoose.service';
@@ -14,30 +12,20 @@ import { IApplication } from './commons/interfaces/services/IApplication';
 import { IMongooseService, IHttpService, IHttpRouter } from './components/application/application.interfaces';
 import { ILoggerService } from './commons/interfaces/services/ILoggerService';
 import { LoggerService } from './components/logging/services/logger.service';
-import { IRedisService } from './commons/interfaces/services/IRedisService';
-import { RedisService } from './components/application/redis.service';
 import { HttpService } from './components/application/http.service';
 import { HttpRouter } from './components/application/http.router';
 import { IMiddlewareProvider } from './commons/interfaces/middleware/IMiddlewareProvider';
 import { ErrorMiddleware } from './components/application/middleware/error.middleware';
 import { BasicMiddleware } from './components/application/middleware/basic.middleware';
-import { INotificationService } from './commons/interfaces/services/INotificationService';
-import { NotificationService } from './components/notifications/infrastructure/notification.service';
-import { IEmailNotificationService, IEmailTemplateGeneratorService } from './components/notifications/notification.interfaces';
-import { EmailNotificationService } from './components/notifications/services/emailNotification.service';
-import { EmailTemplateGeneratorService } from './components/notifications/infrastructure/templateGenerator.service';
-import { IRateService } from './commons/interfaces/services/IRateService';
-import { RateService } from './components/rates/services/rate.service';
-import { ICurrencyService } from './commons/interfaces/services/ICurrencyService';
-import { CurrencyService } from './components/currencies/services/currency.service';
-import { ICurrencyRepository, ICurrencyDocument } from './components/currencies/currency.interfaces';
-import { CurrencyRepository } from './components/currencies/infrastructure/currency.repository';
-import { IRateRepository, IRateDocument, IReutersApi, IReutersService } from './components/rates/rate.interfaces';
-import { RateRepository } from './components/rates/infrastructure/rate.repository';
-import { ReutersApi } from './components/rates/infrastructure/reuters.api';
-import { ReutersService } from './components/rates/services/reuters.service';
-import { IpAuthenticationMiddleware } from './web/middleware/ipAuthentication.middleware';
-import { AuthorizationMiddleware } from './web/middleware/authorization.middleware';
+import { AccountService } from './components/acccounts/account.service';
+import { AccountRepository } from './components/acccounts/account.repository';
+import { TransactionService } from './components/transactions/transaction.service';
+import { TransactionRepository } from './components/transactions/transaction.repository';
+import { PasswordHasher } from './components/hasher/password.hasher';
+import { IAccountDocument } from './components/acccounts/account.interface';
+import accountModel from './components/acccounts/account.model';
+import { ITransactionDocument } from './components/transactions/transaction.interface';
+import transactionModel from './components/transactions/transaction.model';
 
 // Config
 container.bind<config.IConfig>(types.Config).toConstantValue(config);
@@ -45,36 +33,24 @@ container.bind<config.IConfig>(types.Config).toConstantValue(config);
 // Application
 container.bind<IApplication>(types.Application).to(Application);
 container.bind<IMongooseService>(types.MongooseService).to(MongooseService);
-container.bind<IRedisService>(types.RedisService).to(RedisService);
 container.bind<IHttpService>(types.HttpService).to(HttpService);
 container.bind<IHttpRouter>(types.HttpRouter).to(HttpRouter);
 
 // Middleware
 container.bind<IMiddlewareProvider>(types.BasicMiddleware).to(BasicMiddleware);
 container.bind<IMiddlewareProvider>(types.ErrorMiddleware).to(ErrorMiddleware);
-container.bind<IMiddlewareProvider>(types.AuthorizationMiddleware).to(AuthorizationMiddleware);
-container.bind<IMiddlewareProvider>(types.IpAuthenticationMiddleware).to(IpAuthenticationMiddleware);
 
 // Logging
 container.bind<ILoggerService>(types.LoggerService).to(LoggerService);
 
-// Notifications
-container.bind<IEmailNotificationService>(types.EmailNotificationService).to(EmailNotificationService);
-container.bind<IEmailTemplateGeneratorService>(types.EmailTemplateGeneratorService).to(EmailTemplateGeneratorService);
-container.bind<INotificationService>(types.NotificationService).to(NotificationService);
+container.bind<AccountService>(types.AccountService).to(AccountService);
+container.bind<AccountRepository>(types.AccountRepository).to(AccountRepository);
+container.bind<Model<IAccountDocument>>(types.AccountModel).toConstantValue(accountModel);
 
-// Currencies
-container.bind<ICurrencyService>(types.CurrencyService).to(CurrencyService);
-container.bind<ICurrencyRepository>(types.CurrencyRepository).to(CurrencyRepository);
-container.bind<Model<ICurrencyDocument>>(types.CurrencyModel).toConstantValue(currencyModel);
+container.bind<TransactionService>(types.TransactionService).to(TransactionService);
+container.bind<TransactionRepository>(types.TransactionRepository).to(TransactionRepository);
+container.bind<Model<ITransactionDocument>>(types.TransactionModel).toConstantValue(transactionModel);
 
-// Rates
-container.bind<IRateService>(types.RateService).to(RateService);
-container.bind<IRateRepository>(types.RateRepository).to(RateRepository);
-container.bind<Model<IRateDocument>>(types.RateModel).toConstantValue(rateModel);
-
-// Reuters
-container.bind<IReutersService>(types.ReutersService).to(ReutersService);
-container.bind<IReutersApi>(types.ReutersApi).to(ReutersApi);
+container.bind<PasswordHasher>(types.PasswordHasher).to(PasswordHasher);
 
 export default container;

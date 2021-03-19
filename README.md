@@ -1,22 +1,66 @@
-# Reuters Service
-
-## Reuters API documentation
-
-Reuters API documentation can be found on the [official Thompson Reuters site](https://www.trkd.thomsonreuters.com/SupportSite/Home/Index?ReturnUrl=/SupportSite/TestApi/Catalog#).
-
-Authentication is required in order to view the API documentation. Please see the configuration files for the credentials.
+# Assignment
 
 ## Start-up
 
 In order to launch the application for the first time, please execute the following steps:
 
 1. Create an `.env` file. Please use the `.env-example` as a reference to which fields are required.
-2. Launch the application in docker, by executing `docker-compose up`. In case if you are running Windows - please add the `-f docker-compose.windows.yaml` to the command.
+2. Launch the application in docker, by executing `docker-compose up`.
 
 ## Usage
 
-In order to retrieve the list of rates from Redis, please execute the following request:
+The APIs are provided below
+First need to create an account and then proceed with other banking operations
+
+#### Account Creation API
 ```
-curl -x POST localhost:4703/api/v1/cronjobs/getRates
+curl --location --request POST 'localhost:4703/api/v1/createAccount' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "accountNumber": "34567890",
+    "cardNumber":"32425245245",
+    "pin":"1234"
+}'
 ```
-The address should correspond to the address & port where the service is launched.
+
+#### Banking APIs
+```
+curl --location --request POST 'http://localhost:4703/api/v1/deposit' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "accountNumber":"34567890",
+    "amount":100
+}'
+```
+
+```
+curl --location --request POST 'http://localhost:4703/api/v1/withdraw' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "cardNumber":"32425245245",
+    "pin":"1234",
+    "amount":10
+}'
+```
+
+```
+curl --location --request POST 'http://localhost:4703/api/v1/balanceEnquiry' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "cardNumber":"32425245245",
+    "pin":"1234"
+}'
+```
+
+```
+curl --location --request POST 'http://localhost:4703/api/v1/miniStatement' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "cardNumber":"32425245245",
+    "pin":"1234"
+}'
+```
+
+#### Tech Stack
+- NodeJS
+- MongoDB (without ACID)

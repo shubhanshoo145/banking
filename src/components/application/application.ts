@@ -4,19 +4,16 @@ import types from '../../constants/types';
 import { IMongooseService, IHttpService } from './application.interfaces';
 import { IApplication } from '../../commons/interfaces/services/IApplication';
 import { ILoggerService } from '../../commons/interfaces/services/ILoggerService';
-import { IRedisService } from '../../commons/interfaces/services/IRedisService';
 
 @injectable()
 export class Application implements IApplication {
   @inject(types.LoggerService) private readonly loggerService: ILoggerService;
   @inject(types.MongooseService) private readonly mongooseService: IMongooseService;
-  @inject(types.RedisService) private readonly redisService: IRedisService;
   @inject(types.HttpService) private readonly httpService: IHttpService;
 
   public async initialize(): Promise<void> {
     try {
       await this.mongooseService.openConnection();
-      await this.redisService.initializeClient();
       await this.httpService.initializeServer();
 
     } catch (error) {
@@ -49,7 +46,6 @@ export class Application implements IApplication {
         });
         process.exit(1);
       } else {
-        this.redisService.shutdownClient();
         this.mongooseService.closeConnection(() => {
           this.loggerService.info('Mongoose default connection disconnected due to shutdown');
           this.loggerService.info('Gracefull shutdown success');

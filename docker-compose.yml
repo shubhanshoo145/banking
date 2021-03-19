@@ -6,18 +6,15 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - ./docker/mongo-volume:/data/db
-  redis:
-    image: 'redis:3.2.11'
-    ports:
-      - '6379:6379'
-  reuters:
+      - ./docker/mongo-volume:/Users/Shubhanshoo Agarwal/data/db
+      # the path needs to be changed in case of windows system
+      # in case of linux based systems, this will be '/data/db'
+  backend:
     build: ./
     user: 'node'
     working_dir: /home/node/app
     depends_on:
        - mongo
-       - redis
     volumes:
       - ./:/home/node/app/:cached
     ports:

@@ -2,16 +2,14 @@ import { injectable, postConstruct, inject } from 'inversify';
 import { Express, Router } from 'express';
 
 import healtcheckController from './../../web/endpoints/healtcheck.controller';
-import cronjobsController from '../../web/endpoints/cronjobs.controller';
-import ratesController from '../../web/endpoints/rates.controller';
+import bankingController from '../../web/endpoints/banking.controller';
 import types from '../../constants/types';
 import { IMiddlewareProvider } from '../../commons/interfaces/middleware/IMiddlewareProvider';
 import { IHttpRouter } from "./application.interfaces";
+import accountingController from '../../web/endpoints/accounting.controller';
 
 @injectable()
 export class HttpRouter implements IHttpRouter {
-  @inject(types.IpAuthenticationMiddleware) private readonly ipAuthenticationMiddleware: IMiddlewareProvider;
-  @inject(types.AuthorizationMiddleware) private readonly authorizationMiddleware: IMiddlewareProvider;
   private router: Router;
 
   constructor() {
@@ -25,11 +23,7 @@ export class HttpRouter implements IHttpRouter {
   @postConstruct()
   private initializeRoutes(): void {
     healtcheckController(this.router);
-    cronjobsController(this.router);
-
-    this.ipAuthenticationMiddleware.register(this.router);
-    this.authorizationMiddleware.register(this.router);
-
-    ratesController(this.router);
+    bankingController(this.router);
+    accountingController(this.router);
   }
 }

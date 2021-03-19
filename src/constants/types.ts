@@ -5,22 +5,13 @@ export default {
   // Application bootstrap
   Application: Symbol.for('Application'),
   MongooseService: Symbol.for('MongooseService'),
-  RedisService: Symbol.for('RedisService'),
   HttpService: Symbol.for('HttpService'),
   HttpRouter: Symbol.for('HttpRouter'),
 
   // Middleware
   BasicMiddleware: Symbol.for('BasicMiddleware'),
   ErrorMiddleware: Symbol.for('ErrorMiddleware'),
-  IpAuthenticationMiddleware: Symbol.for('IpAuthenticationMiddleware'),
-  AuthorizationMiddleware: Symbol.for('AuthorizationMiddleware'),
-  
 
-  // Notifications
-  EmailNotificationService: Symbol.for('EmailNotificationService'),
-  NotificationService: Symbol.for('NotificationService'),
-  EmailTemplateGeneratorService: Symbol.for('EmailTemplateGeneratorService'),
-  
   // Logging
   LoggerService: Symbol.for('LoggerService'),
 
@@ -37,4 +28,16 @@ export default {
   // Reuters
   ReutersService: Symbol.for('ReutersService'),
   ReutersApi: Symbol.for('ReutersApi'),
+
+  BankingService: Symbol.for('BankingService'),
+
+  AccountService: Symbol.for('AccountService'),
+  AccountRepository: Symbol.for('AccountRepository'),
+  AccountModel: Symbol.for('AccountModel'),
+
+  TransactionModel: Symbol.for('TransactionModel'),
+  TransactionRepository: Symbol.for('TransactionRepository'),
+  TransactionService: Symbol.for('TransactionService'),
+
+  PasswordHasher: Symbol.for('PasswordHasher'),
 };

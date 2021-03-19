@@ -3,22 +3,17 @@ import { IConfig } from 'config';
 import { injectable, inject } from 'inversify';
 import * as moment from 'moment';
 import { Document, Model, Types } from 'mongoose';
-import { AxiosError } from 'axios';
 
 import types from '../../../constants/types';
 import { createLogger, format, Logger, transports } from 'winston';
-import { EmailTransport } from '../infrastructure/email.transport';
 import { ILoggerService } from '../../../commons/interfaces/services/ILoggerService';
-import { INotificationConfig } from '../../../commons/interfaces/config/INotificationConfig';
 
 @injectable()
 export class LoggerService implements ILoggerService {
   private winston: Logger;
-  private notificationConfig: INotificationConfig;
   private readonly MAX_TRANSFORMATION_DEPTH: number = 5;
 
   constructor(@inject(types.Config) config: IConfig) {
-    this.notificationConfig = config.get('default.notifications');
 
     this.winston = createLogger({
       transports: [
@@ -33,17 +28,6 @@ export class LoggerService implements ILoggerService {
       ],
       exitOnError: false,
     });
-
-    if (this.notificationConfig.MAIL_ERRORS_TO) {
-      this.winston.add(new EmailTransport({
-        level: 'error',
-        format: format.combine(
-          format.timestamp(),
-          format.json(),
-        ),
-        handleExceptions: false,
-      }));
-    }
   }
 
   public silly(message: string, metadata?: any): void {

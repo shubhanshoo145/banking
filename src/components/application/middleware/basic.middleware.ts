@@ -13,13 +13,9 @@ export class BasicMiddleware implements IMiddlewareProvider {
   @inject(types.LoggerService) private readonly loggerService: ILoggerService;
 
   public register(router: Router | Express): void {
-    router.use(bodyParser.json({
-      strict: true,
-    }));
+    router.use(bodyParser.json());
 
-    router.use(bodyParser.urlencoded({
-      extended: true,
-    })) 
+    router.use(bodyParser.urlencoded())
 
     router.use(
       morgan(':method :url :status :res[content-length] - :response-time ms', {

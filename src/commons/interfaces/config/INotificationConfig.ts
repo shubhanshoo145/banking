@@ -1,7 +1,0 @@
-export interface INotificationConfig {
-  NOTIFICATION_SERVICE_ENABLED: boolean;
-  NOTIFICATION_ENDPOINT: string;
-  NOTIFICATION_SECRET_KEY_ENCRYPTED: string;
-  NOTIFICATION_SECRET_KEY: string;
-  MAIL_ERRORS_TO: string[];
-}
